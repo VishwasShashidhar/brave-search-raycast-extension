@@ -16,21 +16,15 @@ export default function Command() {
             icon={getIcon(item)}
             actions={
               <ActionPanel>
-                <ActionPanel.Section title="Result">
-                  <Action
-                    title="Open in Browser"
-                    onAction={async () => {
-                      await addHistory(item);
-                      await open(item.url);
-                      await closeMainWindow();
-                    }}
-                    icon={{ source: Icon.ArrowRight }}
-                  />
-
-                  <Action.CopyToClipboard title="Copy URL to Clipboard" content={item.url} />
-                  <Action.CopyToClipboard title="Copy Suggestion to Clipboard" content={item.query} />
-                </ActionPanel.Section>
-
+                <Action
+                  title="Open"
+                  onAction={async () => {
+                    await addHistory(item);
+                    await open(item.url);
+                    await closeMainWindow();
+                  }}
+                  icon={{ source: Icon.ArrowRight }}
+                />
                 <ActionPanel.Section title="History">
                   {item.isHistory && (
                     <Action
@@ -42,7 +36,6 @@ export default function Command() {
                       shortcut={{ modifiers: ["cmd"], key: "d" }}
                     />
                   )}
-
                   <Action
                     title="Clear All History"
                     onAction={async () => {
@@ -50,6 +43,52 @@ export default function Command() {
                     }}
                     icon={{ source: Icon.ExclamationMark }}
                   />
+                </ActionPanel.Section>
+                <ActionPanel.Section title="Open In">
+                  <Action
+                    title="Open in Safari"
+                    onAction={async () => {
+                      await addHistory(item);
+                      await open(item.url, "com.apple.Safari");
+                      await closeMainWindow();
+                    }}
+                    icon={{ source: Icon.ArrowRight }}
+                    shortcut={{ modifiers: ["cmd"], key: "1" }}
+                  />
+                  <Action
+                    title="Open in Brave"
+                    onAction={async () => {
+                      await addHistory(item);
+                      await open(item.url, "com.brave.Browser");
+                      await closeMainWindow();
+                    }}
+                    icon={{ source: Icon.ArrowRight }}
+                    shortcut={{ modifiers: ["cmd"], key: "2" }}
+                  />
+                  <Action
+                    title="Open in Chrome"
+                    onAction={async () => {
+                      await addHistory(item);
+                      await open(item.url, "com.google.Chrome");
+                      await closeMainWindow();
+                    }}
+                    icon={{ source: Icon.ArrowRight }}
+                    shortcut={{ modifiers: ["cmd"], key: "3" }}
+                  />
+                  <Action
+                    title="Open in Firefox"
+                    onAction={async () => {
+                      await addHistory(item);
+                      await open(item.url, "org.mozilla.firefox");
+                      await closeMainWindow();
+                    }}
+                    icon={{ source: Icon.ArrowRight }}
+                    shortcut={{ modifiers: ["cmd"], key: "4" }}
+                  />
+                </ActionPanel.Section>
+                <ActionPanel.Section title="Result">
+                  <Action.CopyToClipboard title="Copy URL to Clipboard" content={item.url} />
+                  <Action.CopyToClipboard title="Copy Suggestion to Clipboard" content={item.query} />
                 </ActionPanel.Section>
               </ActionPanel>
             }
